@@ -44,7 +44,7 @@ int main(int argc, char *argv[]){
     pts.resize(numOfPoint);
     int i=0;
   while (i<numOfPoint){
-      Point p=Point::Point();
+      Point p=Point();
       int x,y;
       cin>>x;cin>>y;
       p.setX(x);p.setY(y);
@@ -52,10 +52,10 @@ int main(int argc, char *argv[]){
     i++;
   }
  
-   /* Brute brute=Brute::Brute(pts,numOfPoint);
+   /* Brute brute=Brute(pts,numOfPoint);
   brute.BruteForce();//problems HERE!!!!!!!!
   */
-    Fast fast=Fast::Fast(pts,numOfPoint);
+    Fast fast=Fast(pts,numOfPoint);
     fast.FastAlgo();
   //fin.close ();
   return 0;

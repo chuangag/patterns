@@ -4,19 +4,20 @@
 //class of point
 class Point{
 private:
-    static Point origin;
+    
   int x;
   int y;
 public:
+  static Point origin;
   //constructors and destructors
-    Point():x(0),y(0){setOrigin(0,0);}
-    Point(int a,int b):x(a),y(b){setOrigin(0,0);}
+    Point(){}
+    Point(int a,int b):x(a),y(b){}
   ~Point(){}
   
   //get functions
   inline int getX() const{return x;}
   inline int getY() const{return y;}
-  float getAngle(Point p)const;
+  double getAngle() const;
   
   //set functions
   void setX(int a);
@@ -47,14 +48,14 @@ void Point::setOrigin(int ox,int oy){
 }
 
 bool Point::operator<(const Point p)const{
-  if(getAngle(*this)<getAngle(p))
+  if(this->getAngle()<p.getAngle())
     return true;
   else
     return false;
 }
 
 bool Point::operator==(const Point p)const{
-  if(getAngle(*this)==getAngle(p))
+  if(this->getAngle()==p.getAngle())
     return true;
   else
     return false;
@@ -68,8 +69,12 @@ bool Point::operator!=(const Point p)const{
 }
 
 
-float Point::getAngle(Point p) const{
-  float angle = atan2(p.getY()-origin.getY(), p.getX()-origin.getX());
+double Point::getAngle()const{
+  double angle;
+  if(this->getX()-origin.getX()==0)angle=-10;
+  else if(this->getY()-origin.getY()==0)angle=0;
+  else 
+    angle= atan((float)(this->getY()-origin.getY())/(float)(this->getX()-origin.getX()));
   return angle;
 }
 
