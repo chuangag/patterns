@@ -1,6 +1,9 @@
 #ifndef _POINT_H
 #define _POINT_H
 #include <math.h>
+#include <iostream>
+using namespace std;
+const double eps=0.0000000000001;
 //class of point
 class Point{
 private:
@@ -55,8 +58,8 @@ bool Point::operator<(const Point p)const{
 }
 
 bool Point::operator==(const Point p)const{
-  if(this->getAngle()==p.getAngle())
-    return true;
+    if(this->getAngle()-p.getAngle()<eps){
+        return true;}
   else
     return false;
 }
@@ -71,10 +74,10 @@ bool Point::operator!=(const Point p)const{
 
 double Point::getAngle()const{
   double angle;
-  if(this->getX()-origin.getX()==0)angle=-10;
-  else if(this->getY()-origin.getY()==0)angle=0;
-  else 
-    angle= atan((float)(this->getY()-origin.getY())/(float)(this->getX()-origin.getX()));
+  if(x-origin.getX()==0)angle=-10;
+  else if(y-origin.getY()==0)angle=0;
+  else
+    angle= atan((float)(y-origin.getY())/(float)(x-origin.getX()));
   return angle;
 }
 
@@ -85,15 +88,27 @@ private:
     //coefficient of ax+by+c=0
     int a,b,c;
 public:
-    Line(int A=1,int B=1, int C=0):a(A),b(B),c(C){}
+    Line(){a=0;b=0;c=0;}
+    Line(int A,int B, int C):a(A),b(B),c(C){}
     ~Line(){}
-    bool checkIsOnline(Point p){
-        if(a*p.getX()+b*p.getY()+c==0)
+    bool isNotOnline(Point p){
+        if(p.getX()*a+p.getY()*b+c==0){
+            //cout<<"is on line"<<endl;
+            return false;
+        }
+        else{
             return true;
+        }
+    }
+    bool operator==(Line ln){
+        
+        if(a/ln.a==b/ln.b&&b/ln.b==c/ln.c){return true;}
         else
             return false;
+        
     }
 };
+
 
 
 #endif

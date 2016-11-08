@@ -35,30 +35,33 @@ int main(int argc, char *argv[]){
     if (! fin.is_open())
     { cout << "Error opening file"<<endl; exit(1); }*/
   
-  int numOfPoint;
-  cin>>numOfPoint;
+    int numOfPoint;
+    cin>>numOfPoint;
     //cout<<numOfPoint<<endl;
     
   
-  vector<Point> pts;
+    vector<Point> pts;
     pts.resize(numOfPoint);
     int i=0;
-  while (i<numOfPoint){
-      Point p=Point();
-      int x,y;
-      cin>>x;cin>>y;
-      p.setX(x);p.setY(y);
-    pts.at(i)=p;
-    i++;
-  }
- 
-   /* Brute brute=Brute(pts,numOfPoint);
-  brute.BruteForce();//problems HERE!!!!!!!!
-  */
+    while (i<numOfPoint){
+        Point p=Point();
+        int x,y;
+        cin>>x;cin>>y;
+        p.setX(x);p.setY(y);
+        pts.at(i)=p;
+        i++;
+    }
+    cout<<endl<<endl<<endl<<endl<<"---------------Fast------------"<<endl<<endl<<endl<<endl;
     Fast fast=Fast(pts,numOfPoint);
     fast.FastAlgo();
-  //fin.close ();
-  return 0;
+
+    cout<<endl<<endl<<endl<<endl<<"---------------Brute------------"<<endl<<endl<<endl<<endl;
+    Brute brute=Brute(pts,numOfPoint);
+    brute.BruteForce();
+    
+    cout<<"Finish"<<endl;
+    
+    return 0;
 }
 
 

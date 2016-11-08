@@ -10,6 +10,7 @@ using namespace std;
 bool compXcord(const Point &a,const Point &b){
     return a.getX()<b.getX();}
 
+
 class Brute{
 private:
   vector<Point> points;//vector of points
