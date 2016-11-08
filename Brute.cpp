@@ -1,68 +1,72 @@
+
 #include "Brute.h"
-#include "Fast.h"
-#include "Point.h"
-#include <fstream>
-#include <iostream>//perror
-#include <stdlib.h>//exit
-#include <assert.h>
-
-using namespace std;
-/*
-int getInput (ifstream &fin, Point::Point p)
-{
-    int x,y;
-    fin >>x;
-    fin >>y;
-    p.setX(x);p.setY(y);
-    
-    if (fin.fail())         // fail to read a record return 0 for failure
-        return 0;
-    
-    return (!fin.fail());    // return 1 for successful; 0 for failure  
-}*/
+//sorting points by x coordinates
+bool compXcord(const Point &a,const Point &b){
+    return a.getX()<b.getX();}
 
 
 
-
-int main(int argc, char *argv[]){
-  /*if(argc<2){
-    perror("please give the input file!");
-    exit(0);
-  }*/
-    //const char *MARK_FILE  = "input6.txt";
-/*ifstream fin;
-    fin.open("input6.txt");
-    if (! fin.is_open())
-    { cout << "Error opening file"<<endl; exit(1); }*/
+void Brute::BruteForce(){
+  //if(points[3])//return if input points less than 4
+    //return;
   
-    int numOfPoint;
-    cin>>numOfPoint;
-    //cout<<numOfPoint<<endl;
+  for(int a=0;a<numOfPoints;a++){
+    for(int b=a+1;b<numOfPoints;b++){
+      for(int c=b+1;c<numOfPoints;c++){
+	for(int d=c+1;d<numOfPoints;d++){
+	  //if all slope==infinite(x==0)
+	  if(points.at(a).getX()==points.at(b).getX()&&points.at(b).getX()==points.at(c).getX()&&points.at(c).getX()==points.at(d).getX()){
+	    vector<Point> PointsToPrint(4);
+	    PointsToPrint.at(0)=points.at(a);PointsToPrint.at(1)=points.at(b);PointsToPrint.at(2)=points.at(c);PointsToPrint.at(3)=points.at(d);
+	    PrintBruteResult(PointsToPrint);
+          //cout<<"sit1"<<endl;
+	  }
+	  //if same y
+	  else if(points.at(a).getY()==points.at(b).getY()&&points.at(b).getY()==points.at(c).getY()&&points.at(c).getY()==points.at(d).getY()){
+	    vector<Point> PointsToPrint(4);
+	    PointsToPrint.at(0)=points.at(a);PointsToPrint.at(1)=points.at(b);PointsToPrint.at(2)=points.at(c);PointsToPrint.at(3)=points.at(d);
+	    PrintBruteResult(PointsToPrint);
+          //cout<<"sit2"<<endl;
+	  }
+	  //same slope relate to a
+	  else{
+	    bool slopecmp_ab_ac,slopecmp_ab_ad;//slopes between ab, ac, ad
+        
     
-  
-    vector<Point> pts;
-    pts.resize(numOfPoint);
-    int i=0;
-    while (i<numOfPoint){
-        Point p=Point();
-        int x,y;
-        cin>>x;cin>>y;
-        p.setX(x);p.setY(y);
-        pts.at(i)=p;
-        i++;
+	    slopecmp_ab_ac=((points.at(b).getY()-points.at(a).getY())*(points.at(c).getX()-points.at(a).getX())==(points.at(c).getY()-points.at(a).getY())*(points.at(b).getX()-points.at(a).getX()));
+        slopecmp_ab_ad=((points.at(b).getY()-points.at(a).getY())*(points.at(d).getX()-points.at(a).getX())==(points.at(d).getY()-points.at(a).getY())*(points.at(b).getX()-points.at(a).getX()));
+          
+          //avoid floating points
+          //slope[1]=(points.at(c).getY()-points.at(a).getY())/(points.at(c).getX()-points.at(a).getX());
+          //slope[2]=(points.at(d).getY()-points.at(a).getY())/(points.at(d).getX()-points.at(a).getX());//if same slopes=>form a   line
+       //   cout<<slope[0]<<" "<<slope[1]<<" "<<slope[2]<<endl;
+          
+	    if(slopecmp_ab_ac&&slopecmp_ab_ad){
+            
+	      vector<Point> PointsToPrint(4);
+	      PointsToPrint.at(0)=points.at(a);PointsToPrint.at(1)=points.at(b);PointsToPrint.at(2)=points.at(c);PointsToPrint.at(3)=points.at(d);
+        //sort by x coordinates
+            
+            sort(PointsToPrint.begin(),PointsToPrint.end(),compXcord);
+	      PrintBruteResult(PointsToPrint);
+            //cout<<"sit3"<<endl;
+	    }
+	      
+	  } 
+	}
+      }
     }
-    cout<<endl<<endl<<endl<<endl<<"---------------Fast------------"<<endl<<endl<<endl<<endl;
-    Fast fast=Fast(pts,numOfPoint);
-    fast.FastAlgo();
-
-    cout<<endl<<endl<<endl<<endl<<"---------------Brute------------"<<endl<<endl<<endl<<endl;
-    Brute brute=Brute(pts,numOfPoint);
-    brute.BruteForce();
-    
-    cout<<"Finish"<<endl;
-    
-    return 0;
+  }
 }
 
-
-
+void Brute::PrintBruteResult(vector<Point> pointsToPrint){
+  cout<<"4:";
+  for(int i=0;i<4;i++){
+    cout<<"("<<pointsToPrint[i].getX()<<", "<<pointsToPrint[i].getY()<<")";
+    if(i!=3)//not last point
+      cout<<" -> ";
+    else
+      cout<<endl;
+  }
+}
+    
