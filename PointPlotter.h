@@ -49,7 +49,8 @@ private:
     
     int numOfPoint;
     vector<Point> pts;
-    
+    bool haslines;
+    vector<vector<Point> >linesToDraw;
 };
 
 

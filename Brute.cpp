@@ -7,8 +7,6 @@ bool compXcord(const Point &a,const Point &b){
 
 
 void Brute::BruteForce(){
-  //if(points[3])//return if input points less than 4
-    //return;
   
   for(int a=0;a<numOfPoints;a++){
     for(int b=a+1;b<numOfPoints;b++){
@@ -19,14 +17,16 @@ void Brute::BruteForce(){
 	    vector<Point> PointsToPrint(4);
 	    PointsToPrint.at(0)=points.at(a);PointsToPrint.at(1)=points.at(b);PointsToPrint.at(2)=points.at(c);PointsToPrint.at(3)=points.at(d);
 	    PrintBruteResult(PointsToPrint);
-          //cout<<"sit1"<<endl;
+	    pointsToDraw.push_back(PointsToPrint);
+          
 	  }
 	  //if same y
 	  else if(points.at(a).getY()==points.at(b).getY()&&points.at(b).getY()==points.at(c).getY()&&points.at(c).getY()==points.at(d).getY()){
 	    vector<Point> PointsToPrint(4);
 	    PointsToPrint.at(0)=points.at(a);PointsToPrint.at(1)=points.at(b);PointsToPrint.at(2)=points.at(c);PointsToPrint.at(3)=points.at(d);
 	    PrintBruteResult(PointsToPrint);
-          //cout<<"sit2"<<endl;
+	    pointsToDraw.push_back(PointsToPrint);
+          
 	  }
 	  //same slope relate to a
 	  else{
@@ -34,22 +34,18 @@ void Brute::BruteForce(){
         
     
 	    slopecmp_ab_ac=((points.at(b).getY()-points.at(a).getY())*(points.at(c).getX()-points.at(a).getX())==(points.at(c).getY()-points.at(a).getY())*(points.at(b).getX()-points.at(a).getX()));
-        slopecmp_ab_ad=((points.at(b).getY()-points.at(a).getY())*(points.at(d).getX()-points.at(a).getX())==(points.at(d).getY()-points.at(a).getY())*(points.at(b).getX()-points.at(a).getX()));
+	    slopecmp_ab_ad=((points.at(b).getY()-points.at(a).getY())*(points.at(d).getX()-points.at(a).getX())==(points.at(d).getY()-points.at(a).getY())*(points.at(b).getX()-points.at(a).getX()));
           
-          //avoid floating points
-          //slope[1]=(points.at(c).getY()-points.at(a).getY())/(points.at(c).getX()-points.at(a).getX());
-          //slope[2]=(points.at(d).getY()-points.at(a).getY())/(points.at(d).getX()-points.at(a).getX());//if same slopes=>form a   line
-       //   cout<<slope[0]<<" "<<slope[1]<<" "<<slope[2]<<endl;
           
 	    if(slopecmp_ab_ac&&slopecmp_ab_ad){
             
 	      vector<Point> PointsToPrint(4);
 	      PointsToPrint.at(0)=points.at(a);PointsToPrint.at(1)=points.at(b);PointsToPrint.at(2)=points.at(c);PointsToPrint.at(3)=points.at(d);
-        //sort by x coordinates
-            
-            sort(PointsToPrint.begin(),PointsToPrint.end(),compXcord);
+	      //sort by x coordinates
+	      sort(PointsToPrint.begin(),PointsToPrint.end(),compXcord);
 	      PrintBruteResult(PointsToPrint);
-            //cout<<"sit3"<<endl;
+	      pointsToDraw.push_back(PointsToPrint);
+            
 	    }
 	      
 	  } 

@@ -31,7 +31,7 @@ void setOrigin(int ox,int oy);
   //compare angles
   bool operator<(const Point p)const;
   bool operator==(const Point p)const;
-    bool operator!=(const Point p)const;
+  bool operator!=(const Point p)const;
   
 };
 

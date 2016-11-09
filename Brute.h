@@ -15,7 +15,7 @@ private:
   int numOfPoints;
 public:
   //constructor and destructor
-    Brute():numOfPoints(0){points.resize(64);}
+    Brute():numOfPoints(0){points.resize(0);pointsToDraw.resize(0);}
     Brute(vector<Point> pts,int n):numOfPoints(n){points=pts;}
   ~Brute(){}
   
@@ -24,6 +24,6 @@ public:
   
   //print fuction
   void PrintBruteResult(vector<Point> pointsToPrint);
-
+  vector<vector<Point> > pointsToDraw;
 };
 #endif

@@ -25,9 +25,9 @@ public:
     
     //print fuction
     void printFast(vector<Point> pointsToPrint);
-    
-    
     vector<vector<Point> > pointsToDraw;
+    
+    
 };
 
 

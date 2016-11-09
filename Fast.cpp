@@ -10,7 +10,6 @@ bool compAngle(const Point &a,const Point &b){
 void Fast::FastAlgo(){
     vector<vector<Point> > seriesOfPointsToPrint(0);
     
-    
     vector<vector<Point> > linesPrinted(0);
     //create a copy of original points for iterating
     vector<Point> copypoints=points;
@@ -23,7 +22,6 @@ void Fast::FastAlgo(){
         sort(points.begin(),points.end(),compAngle);
         //create a vector of vector<point> points to print, ie: few lines to print
 	
-        // cout<<"origin====================== "<<Point::origin.getX()<<","<<Point::origin.getY()<<endl;
         bool firstLineCreated=false;
         
         for(int j=0;j<points.size();j++){
@@ -43,51 +41,9 @@ void Fast::FastAlgo(){
         }
         
         //going over the sorted points and add point with same angle into points to print, only check series with more than 1 elements
-       
-        //check if points to print fit any line in vector<>lines,if not then print and save it to the vector<>lines
-        //cout<<"seriesOfPointsToPrint.size(): "<<seriesOfPointsToPrint.size()<<endl;
-        /*for(int r=0;r<seriesOfPointsToPrint.size();r++){
-            
-            
-            Point a=Point(seriesOfPointsToPrint.at(r).at(0).getX(),seriesOfPointsToPrint.at(r).at(0).getY());
-            Point b=Point(seriesOfPointsToPrint.at(r).at(1).getX(),seriesOfPointsToPrint.at(r).at(1).getY());
-            if(lines.empty()){
-                int x1=a.getX();
-                int x2=b.getX();
-                int y1=a.getY();
-                int y2=b.getY();
-                Line newline=Line(y1-y2,x2-x1,y1*x1-y1*x2+x1*y2-x1*y1);
-                lines.push_back(newline);
-                sort(seriesOfPointsToPrint.at(r).begin(),seriesOfPointsToPrint.at(r).end(),compXcord2);
-                printFast(seriesOfPointsToPrint.at(r));
-                //cout<<"create first line"<<endl;
-            }
-            cout<<"linesize: "<<lines.size()<<endl;
-            for(int l=0;l<lines.size();l++){
-                
-                if((lines.at(l).isNotOnline(a))&&(lines.at(l).isNotOnline(b))){
-                    cout<<"yessss"<<endl;
-                    int x1=a.getX();
-                    int x2=b.getX();
-                    int y1=a.getY();
-                    int y2=b.getY();
-                    Line newline=Line(y1-y2,x2-x1,y1*x1-y1*x2+x1*y2-x1*y1);
-                    //cout<<"new line:"<<y1-y2<<", "<<x2-x1<<", "<<y1*x1-y1*x2+x1*y2-x1*y1<<endl;
-                    lines.push_back(newline);
-                    sort(seriesOfPointsToPrint.at(r).begin(),seriesOfPointsToPrint.at(r).end(),compXcord2);
-                    //printFast(seriesOfPointsToPrint.at(r));
-                }
-            }
-        }*/
+              
         //note that points[i]should be included
-        /*
-         for two points (x1,y1) (y1,y2)
-         we have 
-         a=y1-y2
-         b=x2-x1
-         c=y1x1-y1x2+x1y2-x1y1
-         */
-        //seriesOfPointsToPrint.clear();
+        
     }
     for(int r=0;r<seriesOfPointsToPrint.size();r++){
         bool repeated=false;
@@ -111,36 +67,9 @@ void Fast::FastAlgo(){
                 linesPrinted.push_back(seriesOfPointsToPrint.at(r));
             }
         }
-        /*
-        Point a=Point(seriesOfPointsToPrint.at(r).at(0).getX(),seriesOfPointsToPrint.at(r).at(0).getY());
-        Point b=Point(seriesOfPointsToPrint.at(r).at(1).getX(),seriesOfPointsToPrint.at(r).at(1).getY());
-        if(lines.empty()){
-            int x1=a.getX();
-            int x2=b.getX();
-            int y1=a.getY();
-            int y2=b.getY();
-            Line newline=Line(y1-y2,x2-x1,y1*x1-y1*x2+x1*y2-x1*y1);
-            lines.push_back(newline);
-            sort(seriesOfPointsToPrint.at(r).begin(),seriesOfPointsToPrint.at(r).end(),compXcord2);
-            printFast(seriesOfPointsToPrint.at(r));
-            //cout<<"create first line"<<endl;
-        }
-        cout<<"linesize: "<<lines.size()<<endl;
-        for(int l=0;l<lines.size();l++){
-            
-            if((lines.at(l).isNotOnline(a))&&(lines.at(l).isNotOnline(b))){
-                int x1=a.getX();
-                int x2=b.getX();
-                int y1=a.getY();
-                int y2=b.getY();
-                Line newline=Line(y1-y2,x2-x1,y1*x1-y1*x2+x1*y2-x1*y1);
-                //cout<<"new line:"<<y1-y2<<", "<<x2-x1<<", "<<y1*x1-y1*x2+x1*y2-x1*y1<<endl;
-                lines.push_back(newline);
-                sort(seriesOfPointsToPrint.at(r).begin(),seriesOfPointsToPrint.at(r).end(),compXcord2);
-                //printFast(seriesOfPointsToPrint.at(r));
-            }
-        }*/
+        
     }
+    //add to vector for drawing
     for(int l=0;l<linesPrinted.size();l++){
        pointsToDraw.push_back(linesPrinted.at(l));
     }

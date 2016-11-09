@@ -3,15 +3,15 @@
 #include <QFile>
 #include <QtDebug>
 #include <QTextStream>
-#include <QMessageBox>
 #include <QPainter>
+#include <ctime>
 using namespace std;
 patternsMainWindow::patternsMainWindow(){
   resize(500,500);
   move(200,200);
   numOfPoint=0;
   pts.resize(0);
-  
+  linesToDraw.resize(0);
   setWindowTitle(tr("Patterns by chuangag"));
   ActBrute=new QAction(tr("Run Brute"),this);
   ActFast=new QAction(tr("Run Fast"),this);
@@ -30,34 +30,34 @@ patternsMainWindow::patternsMainWindow(){
  
   
   loadFile();
+  haslines=false;
 }
 
 void patternsMainWindow::loadBrute(){
 //     cout<<endl<<endl<<endl<<endl<<"---------------Brute------------"<<endl<<endl<<endl<<endl;
-    double startTime=(double)clock();
+  clock_t s,e;  
+  s=clock();
     Brute brute=Brute(pts,numOfPoint);
     brute.BruteForce();
-    double endTime=(double)clock();
-    QMessageBox::information(this,"Running time ",QString("%1 microsecond").arg(endTime-startTime));
+    e=clock();
+    linesToDraw=brute.pointsToDraw;
+    haslines=true;
+    update();
+    cout<<(double(e - s)/CLOCKS_PER_SEC)<<" sec"<<endl;
 }
 
 void patternsMainWindow::loadFast(){
 //     cout<<endl<<endl<<endl<<endl<<"---------------Fast------------"<<endl<<endl<<endl<<endl;
-    double startTime=(double)clock();
+    clock_t s,e;
+    s=clock();
     Fast fast=Fast(pts,numOfPoint);
     fast.FastAlgo();
-    double endTime=(double)clock();
+    e=clock();
+    linesToDraw=fast.pointsToDraw;
+    haslines=true;
+    update();
+    cout<<(double(e - s)/CLOCKS_PER_SEC)<<" sec"<<endl;
     
-    /*Paint line Fail!!!!!!!!!!!!!*/
-    for(int l=0;l<fast.pointsToDraw.size();l++){
-      for(int i=0;i<fast.pointsToDraw.at(l).size()-1;i++){
-	QPainter p(this);
-	p.setPen(QColor(Qt::blue));
-	p.drawLine((double)((double)fast.pointsToDraw.at(l).at(i).getX()/32767*(this->width())),(double)(this->height()-(double)fast.pointsToDraw.at(l).at(i).getY()/32767*(this->height())),(double)((double)fast.pointsToDraw.at(l).at(i+1).getX()/32767*(this->width())),(double)(this->height()-(double)fast.pointsToDraw.at(l).at(i+1).getY()/32767*(this->height())));
-      }
-    }
-    
-    QMessageBox::information(this,"Running time ",QString("%1 microsecond").arg(endTime-startTime));
 }
 
 void patternsMainWindow::loadFile(){
@@ -81,25 +81,28 @@ void patternsMainWindow::loadFile(){
     }
   }
 }
-/*
-void patternsMainWindow::paintPoints(QPainter p){
-  p.setPen(QColor(Qt::blue));
-  for(int i=0;i<pts.size();i++){
-     p.drawPoint(pts.at(i).getX(),pts.at(i).getY());
-  }
-}*/
+
 
 void patternsMainWindow::paintEvent(QPaintEvent * event){
-//    paintBoard=new QPainter();
+
   QMainWindow::paintEvent(event);
   QPainter p(this);
   p.setPen(QColor(Qt::blue));
   
   p.fillRect(0,0,this->width(),this->height(),QColor(Qt::white));
   for(int i=0;i<pts.size();i++){
-    p.drawEllipse((double)((double)pts.at(i).getX()/32767*(this->width())),(double)(this->height()-(double)pts.at(i).getY()/32767*(this->height())),5,5);
+    p.drawEllipse((double)((double)pts.at(i).getX()/32767*(this->width()))-2.5,(double)(this->height()-(double)pts.at(i).getY()/32767*(this->height()))-2.5,5,5);
   }
   
-  //paintlines!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-   
+  if(haslines){
+    for(int l=0;l<linesToDraw.size();l++){
+      for(int i=0;i<linesToDraw.at(l).size()-1;i++){
+	
+	p.setPen(QColor(Qt::red));
+	p.drawLine((double)((double)linesToDraw.at(l).at(i).getX()/32767*(this->width())),(double)(this->height()-(double)linesToDraw.at(l).at(i).getY()/32767*(this->height())),(double)((double)linesToDraw.at(l).at(i+1).getX()/32767*(this->width())),(double)(this->height()-(double)linesToDraw.at(l).at(i+1).getY()/32767*(this->height())));
+      }
+    }
+    
+  }
+     
 }
